@@ -1,0 +1,10 @@
+﻿  ECC_trial.cpp
+C:\Users\Denis\source\repos\ECC_trial\ECC_trial\ECC_trial.cpp(69,25): warning C4244: '=': conversion from 'int' to 'float', possible loss of data
+C:\Users\Denis\source\repos\ECC_trial\ECC_trial\ECC_trial.cpp(70,38): warning C4244: 'argument': conversion from 'double' to 'float', possible loss of data
+C:\Users\Denis\source\repos\ECC_trial\ECC_trial\ECC_trial.cpp(70,29): warning C4244: '=': conversion from 'double' to 'float', possible loss of data
+C:\Users\Denis\source\repos\ECC_trial\ECC_trial\ECC_trial.cpp(77,44): warning C4244: '=': conversion from 'int' to 'float', possible loss of data
+C:\Users\Denis\source\repos\ECC_trial\ECC_trial\ECC_trial.cpp(78,41): warning C4244: 'argument': conversion from 'double' to 'float', possible loss of data
+C:\Users\Denis\source\repos\ECC_trial\ECC_trial\ECC_trial.cpp(78,33): warning C4244: '=': conversion from 'double' to 'float', possible loss of data
+C:\Users\Denis\source\repos\ECC_trial\ECC_trial\ECC_trial.cpp(80,34): warning C4244: '=': conversion from 'int' to 'float', possible loss of data
+C:\Users\Denis\source\repos\ECC_trial\ECC_trial\ECC_trial.cpp(81,36): warning C4244: '=': conversion from 'double' to 'float', possible loss of data
+  ECC_trial.vcxproj -> C:\Users\Denis\source\repos\ECC_trial\x64\Debug\ECC_trial.exe
