@@ -5,7 +5,8 @@
 
 using namespace std;
 
-FILE* CSV_file;
+FILE* CSV_file; // To Do: implement the ECDA key exchange after u are done with AES and add modularity to the project
+
 static unsigned char keys[11][16];
 unsigned char cipherText[16];
 
@@ -55,10 +56,10 @@ static const uint8_t inverse_sbox[256] = {
 
 static const unsigned char matrix[16] = {
     //0     1     2     3
-    0xa3, 0x1f, 0x9d, 0xb7,
-    0x2e, 0xd4, 0x8c, 0x3a,
-    0x5f, 0xe8, 0x6b, 0x0c,
-    0xb2, 0x7d, 0x4a, 0xf9,
+    0x02, 0x03, 0x01, 0x01,
+    0x01, 0x02, 0x03, 0x01,
+    0x01, 0x01, 0x02, 0x03,
+    0x03, 0x01, 0x01, 0x02,
 };
 
 void generate_elipse_points(int starting_point, int order)
@@ -141,11 +142,11 @@ void generateKeys(unsigned char* initialKey) // break the initialKey into 4 byte
         keys[0][i] = temp[i];
     }
 
-    for (i = 1; i < 11; i++)
+    for (i = 1; i < 0; i++)
     {
 
         for(j = 0; j < 16; j++)
-            keys[i][j] = temp[j];
+            keys[i][j] = temp[j];       // To Do: Fix the bugs with the key generation 
 
         shiftrows(temp, 0);
 
@@ -182,7 +183,7 @@ bool checkPadding(unsigned char* text, unsigned char key)
         }
         retval = true;
     }
-    else if (key == 0 && (text[16] == '\0' || text[16] == NULL))
+    else if (key == 0 && (text[16] == '\0' || text[16] == NULL))    // To do: fix the bugs with the padding
     {
         cout << "\nIncopatible key" << endl;
         return false;
@@ -200,11 +201,67 @@ bool checkPadding(unsigned char* text, unsigned char key)
 
 }
 
-void AES_encrypt_128(unsigned char* initialKey, unsigned char* plainText, int test)
+// by assigning 2 bytes of memory instead of making pointers to the variables we
+// spare ourselves a lot of headaches and yes, the treasury will have to bear this expanse.
+unsigned char finiteMultiplication(unsigned char a, unsigned char b)  
+{
+    unsigned char result = 0;
+
+    unsigned char i;
+
+    for (i = 0; i < 8; i++) 
+    {
+        // If the lowest bit of b is set, add current a to result
+        if (b & 1)
+            result ^= a;
+
+        // Check if highest bit of a is set (i.e., overflow)
+        // If overflowed, reduce using AES's irreducible polynomial
+        if (a & 0x80)
+            a ^= 0x11B; // 0x11B is the irreducible polynomial
+
+        // Shift a left by 1 (i.e., multiply by x)
+        a <<= 1;
+
+
+
+        // Shift b right by 1 to process next bit
+        b >>= 1;
+    }
+    return result;
+}
+
+void shiftRows(unsigned char* state) {
+    unsigned char temp;
+
+    // Row 1 (second row): shift left by 1
+    temp = state[1];
+    state[1] = state[5];
+    state[5] = state[9];
+    state[9] = state[13];
+    state[13] = temp;
+
+    // Row 2 (third row): shift left by 2
+    temp = state[2];
+    state[2] = state[10];
+    state[10] = temp;
+    temp = state[6];
+    state[6] = state[14];
+    state[14] = temp;
+
+    // Row 3 (fourth row): shift left by 3 (or right by 1)
+    temp = state[3];
+    state[3] = state[15];
+    state[15] = state[11];
+    state[11] = state[7];
+    state[7] = temp;
+}
+
+void AES_encrypt_128(unsigned char* initialKey, unsigned char* plainText)
 {
     unsigned char temp[16];
     unsigned char temp1[16];
-
+        
     unsigned char i;
     unsigned char j;
 
@@ -215,40 +272,56 @@ void AES_encrypt_128(unsigned char* initialKey, unsigned char* plainText, int te
     for (i = 0; i < 16; i++)
         temp1[i] = plainText[i];
 
-    for (rounds = 0; rounds < 11; rounds++)
+    for (i = 0; i < 16; i++)
+    {
+        temp[i] = temp1[i] ^ keys[0][i];
+        printf("%02X ", temp[i]);
+    }
+
+    for (rounds = 0; rounds < 1; rounds++)
     {
         // AES first and second stages XOR the states and sbox them
+        printf("\nStage2 output: ");
         for (i = 0; i < 16; i++)
         {
-            temp[i] = temp1[i] ^ keys[rounds][i];
-            temp[i] = sbox[((temp[i] >> 4) & 0xff) * 16 + (((temp[i] << 4) & 0xff) >> 4)]; // find the value from the sbox
-
+            temp[i] = sbox[temp[i]]; // find the value from the sbox
+            printf("%02X ", temp[i]);
         }
 
+        printf("\nStage3 output: ");
         //Stage 3 shift the rows
-        for (i = 1; i < 4; i++)
+      /*  for (i = 1; i < 4; i++)
         {
             for (j = 1; j <= i; j++)
                 shiftrows(temp, i);
         }
+        */
+        shiftRows(temp);
+        showMessage(temp);
 
-        if(rounds != 10)
-            //Stage 4 const matrix multiplication
-            if (test == 1)
+        if (rounds != 10)
+        {
+            printf("\nStage4 output:");
+            //Stage 4 const matrix multiplication do not it on the last round
+            for (i = 0; i < 4; i++)
             {
-                for (i = 0; i < 4; i++)
-                {
-                    temp[i * 4] = (matrix[0] * temp[i * 4] + matrix[1] * temp[i * 4 + 1] + matrix[2] * temp[i * 4 + 2] + matrix[3] * temp[i * 4 + 3]) % 256;
-                    temp[i * 4 + 1] = (matrix[4] * temp[i * 4] + matrix[5] * temp[i * 4 + 1] + matrix[6] * temp[i * 4 + 2] + matrix[7] * temp[i * 4 + 3]) % 256;
-                    temp[i * 4 + 2] = (matrix[8] * temp[i * 4] + matrix[9] * temp[i * 4 + 1] + matrix[10] * temp[i * 4 + 2] + matrix[11] * temp[i * 4 + 3]) % 256;
-                    temp[i * 4 + 3] = (matrix[12] * temp[i * 4] + matrix[13] * temp[i * 4 + 1] + matrix[14] * temp[i * 4 + 2] + matrix[15] * temp[i * 4 + 3]) % 256;
-                }
-                showmatrix(temp);
-                break;
+                temp[i] = finiteMultiplication(matrix[0], temp[i * 4]) ^ finiteMultiplication(matrix[1], temp[i * 4 + 1]) ^ finiteMultiplication(matrix[2], temp[i * 4 + 2]) ^ finiteMultiplication(matrix[3], temp[i * 4 + 3]);
+                temp[i + 4] = finiteMultiplication(matrix[4], temp[i * 4]) ^ finiteMultiplication(matrix[5], temp[i * 4 + 1]) ^ finiteMultiplication(matrix[6], temp[i * 4 + 2]) ^ finiteMultiplication(matrix[7], temp[i * 4 + 3]);
+                temp[i + 8] = finiteMultiplication(matrix[8], temp[i * 4]) ^ finiteMultiplication(matrix[9], temp[i * 4 + 1]) ^ finiteMultiplication(matrix[10], temp[i * 4 + 2]) ^ finiteMultiplication(matrix[11], temp[i * 4 + 3]);
+                temp[i + 12] = finiteMultiplication(matrix[12], temp[i * 4]) ^ finiteMultiplication(matrix[13], temp[i * 4 + 1]) ^ finiteMultiplication(matrix[14], temp[i * 4 + 2]) ^ finiteMultiplication(matrix[15], temp[i * 4 + 3]);
+                printf(" %02X %02X %02X %02X", temp[i*4], temp[i * 4 + 1], temp[i * 4 + 2], temp[i * 4 + 3]);
             }
+        }
         else
         {
             // do nothing
+        }
+
+        printf("\nStage1 output: ");
+        for (i = 0; i < 16; i++)
+        {
+            temp[i] = temp1[i] ^ keys[rounds + 1][i];
+            printf("%02X ", temp[i]);
         }
 
         for(i = 0; i < 16; i++)
@@ -259,57 +332,56 @@ void AES_encrypt_128(unsigned char* initialKey, unsigned char* plainText, int te
         cipherText[i] = temp[i];
 }
 
-void AES_decrypt_128(unsigned char* cipheText)
+void AES_128_decrypt(unsigned char* cipherText)
 {
-        
+        // To Do: make the decryption algorithm
 }
 
 int main()
 {
-    unsigned char plainText[30] = { 0xdb, 0x13, 0x53, 0x45,
-        0xf2, 0x0a, 0x22, 0x5c,
-        0x01, 0x01, 0x01, 0x01,
-        0xc6, 0xc6, 0xc6, 0xc6 };
-
-    unsigned char initialKey[16] = {
-    0x2b, 0x7e, 0x15, 0x16,
-    0x28, 0xae, 0xd2, 0xa6,
-    0xab, 0xf7, 0x97, 0x75,
-    0x46, 0x20, 0x63, 0xed
+    unsigned char plainText[16] = { 
+    0x00, 0x11, 0x22, 0x33,
+    0x44, 0x55, 0x66, 0x77,
+    0x88, 0x99, 0xaa, 0xbb,
+    0xcc, 0xdd, 0xee, 0xff
     };
-
+    unsigned char initialKey[16] = {
+    0x00, 0x01, 0x02, 0x03,
+    0x04, 0x05, 0x06, 0x07,
+    0x08, 0x09, 0x0a, 0x0b,
+    0x0c, 0x0d, 0x0e, 0x0f
+    };
     bool repeat = false;
 
-    repeat = checkPadding(initialKey, 0);
-    repeat = false;
+    unsigned char temp[16] = {
+    0xd6, 0xaa, 0x74, 0xfd,
+    0xd2, 0xaf, 0x72, 0xfd,
+    0xaa, 0xa6, 0x78, 0xf1,
+    0xd6, 0xab, 0x76, 0xfe
+    };
+
+    for (int i = 0; i < 16; i++)
+    {
+        keys[1][i] = temp[i];
+    }
+
+   // repeat = checkPadding(initialKey, 0);
+    repeat = true;
 
     while (repeat)
     {
         // generate_elipse_points(1, 113);
-            AES_encrypt_128(initialKey, plainText, 1);
+            AES_encrypt_128(initialKey, plainText);
 
             cout << "Initial message is: ";
             showmatrix(plainText);
-            break;
             cout << "\nCipherText is: ";
             showMessage(cipherText);
             cout << endl;
 
-            repeat = checkPadding(plainText, 1);
+            //repeat = checkPadding(plainText, 1);
+            repeat = false;
     }
-
-    generateKeys(initialKey);
-    
-    for (int i = 0; i < 11; i++)
-    {
-        showmatrix(keys[i]);
-        cout << endl;
-    }
-   //first * 16 + second
-
-   // (temp[1] << 4) & 0xff) >> 4 get the second part of the value of a hex
-   // (temp[1] >> 4) & 0xff) get the first part of the value of a hex
-
 
     return 0;   
 }
