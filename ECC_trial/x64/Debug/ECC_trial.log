@@ -7,5 +7,5 @@ C:\Users\Denis\source\repos\ECC_trial_new\AES_128bit\ECC_trial\ECC_trial.cpp(79,
 C:\Users\Denis\source\repos\ECC_trial_new\AES_128bit\ECC_trial\ECC_trial.cpp(79,33): warning C4244: '=': conversion from 'double' to 'float', possible loss of data
 C:\Users\Denis\source\repos\ECC_trial_new\AES_128bit\ECC_trial\ECC_trial.cpp(81,34): warning C4244: '=': conversion from 'int' to 'float', possible loss of data
 C:\Users\Denis\source\repos\ECC_trial_new\AES_128bit\ECC_trial\ECC_trial.cpp(82,36): warning C4244: '=': conversion from 'double' to 'float', possible loss of data
-C:\Users\Denis\source\repos\ECC_trial_new\AES_128bit\ECC_trial\ECC_trial.cpp(266,19): warning C4101: 'j': unreferenced local variable
+C:\Users\Denis\source\repos\ECC_trial_new\AES_128bit\ECC_trial\ECC_trial.cpp(278,19): warning C4101: 'j': unreferenced local variable
   ECC_trial.vcxproj -> C:\Users\Denis\source\repos\ECC_trial_new\AES_128bit\x64\Debug\ECC_trial.exe

@@ -7,7 +7,7 @@ using namespace std;
 
 FILE* CSV_file; // To Do: implement the ECDA key exchange after u are done with AES and add modularity to the project
 
-static unsigned char keys[11][16];
+static unsigned char keys[12][16];
 unsigned char cipherText[16];
 
 static const unsigned char rcon[10] = {
@@ -114,11 +114,38 @@ static inline void shiftrows(unsigned char* temp, int i) // to the left, i is fo
 {
     unsigned char aux;
 
-    aux = temp[i * 4];
-    temp[i * 4] = temp[i * 4 + 1];
-    temp[i * 4 + 1] = temp[i * 4 + 2];
-    temp[i * 4 + 2] = temp[i * 4 + 3];
-    temp[i * 4 + 3] = aux;
+    if (i == -1)
+    {
+        // Row 1 (second row): shift left by 1
+        aux = temp[1];
+        temp[1] = temp[5];
+        temp[5] = temp[9];
+        temp[9] = temp[13];
+        temp[13] = aux;
+
+        // Row 2 (third row): shift left by 2
+        aux = temp[2];
+        temp[2] = temp[10];
+        temp[10] = aux;
+        aux = temp[6];
+        temp[6] = temp[14];
+        temp[14] = aux;
+
+        // Row 3 (fourth row): shift left by 3 (or right by 1)
+        aux = temp[3];
+        temp[3] = temp[15];
+        temp[15] = temp[11];
+        temp[11] = temp[7];
+        temp[7] = aux;
+    }
+    else
+    {
+        aux = temp[i];
+        temp[i] = temp[i + 4];
+        temp[i + 4] = temp[i + 8];
+        temp[i + 8] = temp[i + 12];
+        temp[i + 12] = aux;
+    }
 }
 
 static inline void showMessage(unsigned char* msg)
@@ -209,6 +236,8 @@ unsigned char finiteMultiplication(unsigned char a, unsigned char b)
 
     unsigned char i;
 
+    unsigned char hi_bit;
+
     for (i = 0; i < 8; i++) 
     {
         // If the lowest bit of b is set, add current a to result
@@ -216,14 +245,14 @@ unsigned char finiteMultiplication(unsigned char a, unsigned char b)
             result ^= a;
 
         // Check if highest bit of a is set (i.e., overflow)
-        // If overflowed, reduce using AES's irreducible polynomial
-        if (a & 0x80)
-            a ^= 0x11B; // 0x11B is the irreducible polynomial
+        hi_bit = a & 0x80;
 
         // Shift a left by 1 (i.e., multiply by x)
         a <<= 1;
 
-
+        // If overflowed, reduce using AES's irreducible polynomial
+        if (hi_bit)
+            a ^= 0x1B; // 0x1B is the irreducible polynomial
 
         // Shift b right by 1 to process next bit
         b >>= 1;
@@ -231,105 +260,78 @@ unsigned char finiteMultiplication(unsigned char a, unsigned char b)
     return result;
 }
 
-void shiftRows(unsigned char* state) {
-    unsigned char temp;
+static inline void copyString(unsigned char* destination, unsigned char* source)
+{
+    unsigned char i;
 
-    // Row 1 (second row): shift left by 1
-    temp = state[1];
-    state[1] = state[5];
-    state[5] = state[9];
-    state[9] = state[13];
-    state[13] = temp;
-
-    // Row 2 (third row): shift left by 2
-    temp = state[2];
-    state[2] = state[10];
-    state[10] = temp;
-    temp = state[6];
-    state[6] = state[14];
-    state[14] = temp;
-
-    // Row 3 (fourth row): shift left by 3 (or right by 1)
-    temp = state[3];
-    state[3] = state[15];
-    state[15] = state[11];
-    state[11] = state[7];
-    state[7] = temp;
+    for (i = 0; i < 16; i++)
+    {
+        destination[i] = source[i];
+    }
 }
 
 void AES_encrypt_128(unsigned char* initialKey, unsigned char* plainText)
 {
     unsigned char temp[16];
-    unsigned char temp1[16];
         
     unsigned char i;
-    unsigned char j;
 
     unsigned char rounds;
+
+    unsigned char a0;
+    unsigned char a1;
+    unsigned char a2;
+    unsigned char a3;
 
     generateKeys(initialKey);
 
     for (i = 0; i < 16; i++)
-        temp1[i] = plainText[i];
-
-    for (i = 0; i < 16; i++)
     {
-        temp[i] = temp1[i] ^ keys[0][i];
-        printf("%02X ", temp[i]);
+        temp[i] = plainText[i] ^ keys[0][i]; // Round 0 key XOR-ing
     }
 
-    for (rounds = 0; rounds < 1; rounds++)
+    // AES-128 has 11 rounds
+    for (rounds = 0; rounds < 11; rounds++)
     {
-        // AES first and second stages XOR the states and sbox them
-        printf("\nStage2 output: ");
+        // AES First stage sbox the states
         for (i = 0; i < 16; i++)
         {
             temp[i] = sbox[temp[i]]; // find the value from the sbox
-            printf("%02X ", temp[i]);
         }
 
-        printf("\nStage3 output: ");
-        //Stage 3 shift the rows
-      /*  for (i = 1; i < 4; i++)
-        {
-            for (j = 1; j <= i; j++)
-                shiftrows(temp, i);
-        }
-        */
-        shiftRows(temp);
-        showMessage(temp);
+        //Stage 2 shift the rows
+        shiftrows(temp, -1);
 
         if (rounds != 10)
         {
-            printf("\nStage4 output:");
-            //Stage 4 const matrix multiplication do not it on the last round
+            //Stage 3 const matrix multiplication do not do it on the last round
             for (i = 0; i < 4; i++)
             {
-                temp[i] = finiteMultiplication(matrix[0], temp[i * 4]) ^ finiteMultiplication(matrix[1], temp[i * 4 + 1]) ^ finiteMultiplication(matrix[2], temp[i * 4 + 2]) ^ finiteMultiplication(matrix[3], temp[i * 4 + 3]);
-                temp[i + 4] = finiteMultiplication(matrix[4], temp[i * 4]) ^ finiteMultiplication(matrix[5], temp[i * 4 + 1]) ^ finiteMultiplication(matrix[6], temp[i * 4 + 2]) ^ finiteMultiplication(matrix[7], temp[i * 4 + 3]);
-                temp[i + 8] = finiteMultiplication(matrix[8], temp[i * 4]) ^ finiteMultiplication(matrix[9], temp[i * 4 + 1]) ^ finiteMultiplication(matrix[10], temp[i * 4 + 2]) ^ finiteMultiplication(matrix[11], temp[i * 4 + 3]);
-                temp[i + 12] = finiteMultiplication(matrix[12], temp[i * 4]) ^ finiteMultiplication(matrix[13], temp[i * 4 + 1]) ^ finiteMultiplication(matrix[14], temp[i * 4 + 2]) ^ finiteMultiplication(matrix[15], temp[i * 4 + 3]);
-                printf(" %02X %02X %02X %02X", temp[i*4], temp[i * 4 + 1], temp[i * 4 + 2], temp[i * 4 + 3]);
+                a0 = temp[i * 4];
+                a1 = temp[i * 4 + 1];
+                a2 = temp[i * 4 + 2];
+                a3 = temp[i * 4 + 3];
+
+                temp[i * 4] = finiteMultiplication(matrix[0], a0) ^ finiteMultiplication(matrix[1], a1) ^ finiteMultiplication(matrix[2], a2) ^ finiteMultiplication(matrix[3], a3);
+                temp[i * 4 + 1] = finiteMultiplication(matrix[4], a0) ^ finiteMultiplication(matrix[5], a1) ^ finiteMultiplication(matrix[6], a2) ^ finiteMultiplication(matrix[7], a3);
+                temp[i * 4 + 2] = finiteMultiplication(matrix[8], a0) ^ finiteMultiplication(matrix[9], a1) ^ finiteMultiplication(matrix[10], a2) ^ finiteMultiplication(matrix[11], a3);
+                temp[i * 4 + 3] = finiteMultiplication(matrix[12], a0) ^ finiteMultiplication(matrix[13], a1) ^ finiteMultiplication(matrix[14], a2) ^ finiteMultiplication(matrix[15], a3);
             }
         }
         else
         {
-            // do nothing
+            // do nothing, for compiler efficiency reasons
         }
 
-        printf("\nStage1 output: ");
+        // AES Last stage XOR the states with the round key
         for (i = 0; i < 16; i++)
         {
-            temp[i] = temp1[i] ^ keys[rounds + 1][i];
-            printf("%02X ", temp[i]);
+            temp[i] = temp[i] ^ keys[rounds + 1][i];
         }
 
-        for(i = 0; i < 16; i++)
-            temp1[i] = temp[i];
     }
 
-    for (i = 0; i < 16; i++)
-        cipherText[i] = temp[i];
+    copyString(cipherText, temp);
 }
 
 void AES_128_decrypt(unsigned char* cipherText)
@@ -355,8 +357,8 @@ int main()
 
     unsigned char temp[16] = {
     0xd6, 0xaa, 0x74, 0xfd,
-    0xd2, 0xaf, 0x72, 0xfd,
-    0xaa, 0xa6, 0x78, 0xf1,
+    0xd2, 0xaf, 0x72, 0xfa,
+    0xda, 0xa6, 0x78, 0xf1,
     0xd6, 0xab, 0x76, 0xfe
     };
 
