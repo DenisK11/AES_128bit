@@ -1,11 +1,14 @@
-﻿  ECC_trial.cpp
-C:\Users\Denis\source\repos\ECC_trial_new\AES_128bit\ECC_trial\ECC_trial.cpp(70,25): warning C4244: '=': conversion from 'int' to 'float', possible loss of data
-C:\Users\Denis\source\repos\ECC_trial_new\AES_128bit\ECC_trial\ECC_trial.cpp(71,38): warning C4244: 'argument': conversion from 'double' to 'float', possible loss of data
-C:\Users\Denis\source\repos\ECC_trial_new\AES_128bit\ECC_trial\ECC_trial.cpp(71,29): warning C4244: '=': conversion from 'double' to 'float', possible loss of data
-C:\Users\Denis\source\repos\ECC_trial_new\AES_128bit\ECC_trial\ECC_trial.cpp(78,44): warning C4244: '=': conversion from 'int' to 'float', possible loss of data
-C:\Users\Denis\source\repos\ECC_trial_new\AES_128bit\ECC_trial\ECC_trial.cpp(79,41): warning C4244: 'argument': conversion from 'double' to 'float', possible loss of data
-C:\Users\Denis\source\repos\ECC_trial_new\AES_128bit\ECC_trial\ECC_trial.cpp(79,33): warning C4244: '=': conversion from 'double' to 'float', possible loss of data
-C:\Users\Denis\source\repos\ECC_trial_new\AES_128bit\ECC_trial\ECC_trial.cpp(81,34): warning C4244: '=': conversion from 'int' to 'float', possible loss of data
-C:\Users\Denis\source\repos\ECC_trial_new\AES_128bit\ECC_trial\ECC_trial.cpp(82,36): warning C4244: '=': conversion from 'double' to 'float', possible loss of data
-C:\Users\Denis\source\repos\ECC_trial_new\AES_128bit\ECC_trial\ECC_trial.cpp(278,19): warning C4101: 'j': unreferenced local variable
+﻿  AES_128.cpp
+  ECC_trial.cpp
+  ECDA.cpp
+C:\Users\Denis\source\repos\ECC_trial_new\AES_128bit\ECC_trial\ECDA.cpp(8,25): warning C4244: '=': conversion from 'int' to 'float', possible loss of data
+C:\Users\Denis\source\repos\ECC_trial_new\AES_128bit\ECC_trial\ECDA.cpp(9,36): warning C4244: 'argument': conversion from 'double' to 'float', possible loss of data
+C:\Users\Denis\source\repos\ECC_trial_new\AES_128bit\ECC_trial\ECDA.cpp(9,29): warning C4244: '=': conversion from 'double' to 'float', possible loss of data
+C:\Users\Denis\source\repos\ECC_trial_new\AES_128bit\ECC_trial\ECDA.cpp(16,44): warning C4244: '=': conversion from 'int' to 'float', possible loss of data
+C:\Users\Denis\source\repos\ECC_trial_new\AES_128bit\ECC_trial\ECDA.cpp(17,40): warning C4244: 'argument': conversion from 'double' to 'float', possible loss of data
+C:\Users\Denis\source\repos\ECC_trial_new\AES_128bit\ECC_trial\ECDA.cpp(17,33): warning C4244: '=': conversion from 'double' to 'float', possible loss of data
+C:\Users\Denis\source\repos\ECC_trial_new\AES_128bit\ECC_trial\ECDA.cpp(19,34): warning C4244: '=': conversion from 'int' to 'float', possible loss of data
+C:\Users\Denis\source\repos\ECC_trial_new\AES_128bit\ECC_trial\ECDA.cpp(20,36): warning C4244: '=': conversion from 'double' to 'float', possible loss of data
+  Utilities.cpp
+  Generating Code...
   ECC_trial.vcxproj -> C:\Users\Denis\source\repos\ECC_trial_new\AES_128bit\x64\Debug\ECC_trial.exe

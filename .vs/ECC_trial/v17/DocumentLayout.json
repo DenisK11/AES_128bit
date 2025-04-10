@@ -3,16 +3,32 @@
   "WorkspaceRootPath": "C:\\Users\\Denis\\source\\repos\\ECC_trial_new\\AES_128bit\\",
   "Documents": [
     {
+      "AbsoluteMoniker": "D:0:0:{CB159031-FD93-42BF-9ECF-E9EB99098C92}|ECC_trial\\ECC_trial.vcxproj|C:\\Users\\Denis\\source\\repos\\ECC_trial_new\\AES_128bit\\ECC_trial\\AES_128.cpp||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}",
+      "RelativeMoniker": "D:0:0:{CB159031-FD93-42BF-9ECF-E9EB99098C92}|ECC_trial\\ECC_trial.vcxproj|solutionrelative:ECC_trial\\AES_128.cpp||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}"
+    },
+    {
       "AbsoluteMoniker": "D:0:0:{CB159031-FD93-42BF-9ECF-E9EB99098C92}|ECC_trial\\ECC_trial.vcxproj|C:\\Users\\Denis\\source\\repos\\ECC_trial_new\\AES_128bit\\ECC_trial\\ECC_trial.cpp||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}",
       "RelativeMoniker": "D:0:0:{CB159031-FD93-42BF-9ECF-E9EB99098C92}|ECC_trial\\ECC_trial.vcxproj|solutionrelative:ECC_trial\\ECC_trial.cpp||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{CB159031-FD93-42BF-9ECF-E9EB99098C92}|ECC_trial\\ECC_trial.vcxproj|C:\\Users\\Denis\\source\\repos\\ECC_trial_new\\AES_128bit\\ECC_trial\\Header.h||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}",
-      "RelativeMoniker": "D:0:0:{CB159031-FD93-42BF-9ECF-E9EB99098C92}|ECC_trial\\ECC_trial.vcxproj|solutionrelative:ECC_trial\\Header.h||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}"
+      "AbsoluteMoniker": "D:0:0:{CB159031-FD93-42BF-9ECF-E9EB99098C92}|ECC_trial\\ECC_trial.vcxproj|C:\\Users\\Denis\\source\\repos\\ECC_trial_new\\AES_128bit\\ECC_trial\\AES_128.h||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}",
+      "RelativeMoniker": "D:0:0:{CB159031-FD93-42BF-9ECF-E9EB99098C92}|ECC_trial\\ECC_trial.vcxproj|solutionrelative:ECC_trial\\AES_128.h||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{CB159031-FD93-42BF-9ECF-E9EB99098C92}|ECC_trial\\ECC_trial.vcxproj|C:\\Users\\Denis\\source\\repos\\ECC_trial_new\\AES_128bit\\ECC_trial\\Source.cpp||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}",
-      "RelativeMoniker": "D:0:0:{CB159031-FD93-42BF-9ECF-E9EB99098C92}|ECC_trial\\ECC_trial.vcxproj|solutionrelative:ECC_trial\\Source.cpp||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}"
+      "AbsoluteMoniker": "D:0:0:{CB159031-FD93-42BF-9ECF-E9EB99098C92}|ECC_trial\\ECC_trial.vcxproj|C:\\Users\\Denis\\source\\repos\\ECC_trial_new\\AES_128bit\\ECC_trial\\ECDA.h||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}",
+      "RelativeMoniker": "D:0:0:{CB159031-FD93-42BF-9ECF-E9EB99098C92}|ECC_trial\\ECC_trial.vcxproj|solutionrelative:ECC_trial\\ECDA.h||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{CB159031-FD93-42BF-9ECF-E9EB99098C92}|ECC_trial\\ECC_trial.vcxproj|C:\\Users\\Denis\\source\\repos\\ECC_trial_new\\AES_128bit\\ECC_trial\\Utilities.h||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}",
+      "RelativeMoniker": "D:0:0:{CB159031-FD93-42BF-9ECF-E9EB99098C92}|ECC_trial\\ECC_trial.vcxproj|solutionrelative:ECC_trial\\Utilities.h||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{CB159031-FD93-42BF-9ECF-E9EB99098C92}|ECC_trial\\ECC_trial.vcxproj|C:\\Users\\Denis\\source\\repos\\ECC_trial_new\\AES_128bit\\ECC_trial\\Utilities.cpp||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}",
+      "RelativeMoniker": "D:0:0:{CB159031-FD93-42BF-9ECF-E9EB99098C92}|ECC_trial\\ECC_trial.vcxproj|solutionrelative:ECC_trial\\Utilities.cpp||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{CB159031-FD93-42BF-9ECF-E9EB99098C92}|ECC_trial\\ECC_trial.vcxproj|C:\\Users\\Denis\\source\\repos\\ECC_trial_new\\AES_128bit\\ECC_trial\\ECDA.cpp||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}",
+      "RelativeMoniker": "D:0:0:{CB159031-FD93-42BF-9ECF-E9EB99098C92}|ECC_trial\\ECC_trial.vcxproj|solutionrelative:ECC_trial\\ECDA.cpp||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}"
     }
   ],
   "DocumentGroupContainers": [
@@ -22,41 +38,95 @@
       "DocumentGroups": [
         {
           "DockedWidth": 200,
-          "SelectedChildIndex": 2,
+          "SelectedChildIndex": 4,
           "Children": [
             {
               "$type": "Document",
-              "DocumentIndex": 2,
-              "Title": "Source.cpp",
-              "DocumentMoniker": "C:\\Users\\Denis\\source\\repos\\ECC_trial_new\\AES_128bit\\ECC_trial\\Source.cpp",
-              "RelativeDocumentMoniker": "ECC_trial\\Source.cpp",
-              "ToolTip": "C:\\Users\\Denis\\source\\repos\\ECC_trial_new\\AES_128bit\\ECC_trial\\Source.cpp",
-              "RelativeToolTip": "ECC_trial\\Source.cpp",
-              "ViewState": "AQIAAAAAAAAAAAAAAAAAAAAAAAAAAAAA",
+              "DocumentIndex": 6,
+              "Title": "ECDA.cpp",
+              "DocumentMoniker": "C:\\Users\\Denis\\source\\repos\\ECC_trial_new\\AES_128bit\\ECC_trial\\ECDA.cpp",
+              "RelativeDocumentMoniker": "ECC_trial\\ECDA.cpp",
+              "ToolTip": "C:\\Users\\Denis\\source\\repos\\ECC_trial_new\\AES_128bit\\ECC_trial\\ECDA.cpp",
+              "RelativeToolTip": "ECC_trial\\ECDA.cpp",
+              "ViewState": "AQIAAAAAAAAAAAAAAAAAAAoAAAAtAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000677|",
-              "WhenOpened": "2025-03-24T16:52:42.328Z"
+              "WhenOpened": "2025-04-10T07:44:41.907Z",
+              "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 1,
-              "Title": "Header.h",
-              "DocumentMoniker": "C:\\Users\\Denis\\source\\repos\\ECC_trial_new\\AES_128bit\\ECC_trial\\Header.h",
-              "RelativeDocumentMoniker": "ECC_trial\\Header.h",
-              "ToolTip": "C:\\Users\\Denis\\source\\repos\\ECC_trial_new\\AES_128bit\\ECC_trial\\Header.h",
-              "RelativeToolTip": "ECC_trial\\Header.h",
-              "ViewState": "AQIAAAAAAAAAAAAAAAAAAAUAAAAAAAAA",
+              "DocumentIndex": 3,
+              "Title": "ECDA.h",
+              "DocumentMoniker": "C:\\Users\\Denis\\source\\repos\\ECC_trial_new\\AES_128bit\\ECC_trial\\ECDA.h",
+              "RelativeDocumentMoniker": "ECC_trial\\ECDA.h",
+              "ToolTip": "C:\\Users\\Denis\\source\\repos\\ECC_trial_new\\AES_128bit\\ECC_trial\\ECDA.h",
+              "RelativeToolTip": "ECC_trial\\ECDA.h",
+              "ViewState": "AQIAAAAAAAAAAAAAAAAAAAMAAAApAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000680|",
-              "WhenOpened": "2025-03-24T16:52:27.731Z"
+              "WhenOpened": "2025-04-10T07:44:23.071Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 4,
+              "Title": "Utilities.h",
+              "DocumentMoniker": "C:\\Users\\Denis\\source\\repos\\ECC_trial_new\\AES_128bit\\ECC_trial\\Utilities.h",
+              "RelativeDocumentMoniker": "ECC_trial\\Utilities.h",
+              "ToolTip": "C:\\Users\\Denis\\source\\repos\\ECC_trial_new\\AES_128bit\\ECC_trial\\Utilities.h",
+              "RelativeToolTip": "ECC_trial\\Utilities.h",
+              "ViewState": "AQIAAAAAAAAAAAAAAAAAAAkAAAAAAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000680|",
+              "WhenOpened": "2025-04-10T07:35:30.491Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 5,
+              "Title": "Utilities.cpp",
+              "DocumentMoniker": "C:\\Users\\Denis\\source\\repos\\ECC_trial_new\\AES_128bit\\ECC_trial\\Utilities.cpp",
+              "RelativeDocumentMoniker": "ECC_trial\\Utilities.cpp",
+              "ToolTip": "C:\\Users\\Denis\\source\\repos\\ECC_trial_new\\AES_128bit\\ECC_trial\\Utilities.cpp",
+              "RelativeToolTip": "ECC_trial\\Utilities.cpp",
+              "ViewState": "AQIAAAAAAAAAAAAAAAAAAAYAAAAgAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000677|",
+              "WhenOpened": "2025-04-10T07:35:15.878Z",
+              "EditorCaption": ""
             },
             {
               "$type": "Document",
               "DocumentIndex": 0,
+              "Title": "AES_128.cpp",
+              "DocumentMoniker": "C:\\Users\\Denis\\source\\repos\\ECC_trial_new\\AES_128bit\\ECC_trial\\AES_128.cpp",
+              "RelativeDocumentMoniker": "ECC_trial\\AES_128.cpp",
+              "ToolTip": "C:\\Users\\Denis\\source\\repos\\ECC_trial_new\\AES_128bit\\ECC_trial\\AES_128.cpp",
+              "RelativeToolTip": "ECC_trial\\AES_128.cpp",
+              "ViewState": "AQIAAFcAAAAAAAAAAAAmwFIAAAAdAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000677|",
+              "WhenOpened": "2025-03-24T16:52:42.328Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 2,
+              "Title": "AES_128.h",
+              "DocumentMoniker": "C:\\Users\\Denis\\source\\repos\\ECC_trial_new\\AES_128bit\\ECC_trial\\AES_128.h",
+              "RelativeDocumentMoniker": "ECC_trial\\AES_128.h",
+              "ToolTip": "C:\\Users\\Denis\\source\\repos\\ECC_trial_new\\AES_128bit\\ECC_trial\\AES_128.h",
+              "RelativeToolTip": "ECC_trial\\AES_128.h",
+              "ViewState": "AQIAAAAAAAAAAAAAAAAAAAcAAAAAAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000680|",
+              "WhenOpened": "2025-03-24T16:52:27.731Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 1,
               "Title": "ECC_trial.cpp",
               "DocumentMoniker": "C:\\Users\\Denis\\source\\repos\\ECC_trial_new\\AES_128bit\\ECC_trial\\ECC_trial.cpp",
               "RelativeDocumentMoniker": "ECC_trial\\ECC_trial.cpp",
               "ToolTip": "C:\\Users\\Denis\\source\\repos\\ECC_trial_new\\AES_128bit\\ECC_trial\\ECC_trial.cpp",
               "RelativeToolTip": "ECC_trial\\ECC_trial.cpp",
-              "ViewState": "AQIAAGoAAAAAAAAAAAAAAIAAAAAXAAAA",
+              "ViewState": "AQIAAAAAAAAAAAAAAAAAAAIAAAAAAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000677|",
               "WhenOpened": "2025-03-20T11:05:08.664Z",
               "EditorCaption": ""
