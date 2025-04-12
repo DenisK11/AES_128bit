@@ -1,11 +1,11 @@
 #include "AES_128.h"
 
-extern unsigned char keys[12][16];
+extern unsigned char keys[11][16];
 extern unsigned char cipherText[16];
 
 // Will update the code making it more efficient and optimized
 
-void AES_encrypt_128(unsigned char* initialKey, unsigned char* plainText)
+unsigned char* AES_encrypt_128(unsigned char* initialKey, unsigned char* plainText)
 {
     unsigned char temp[16];
 
@@ -25,8 +25,8 @@ void AES_encrypt_128(unsigned char* initialKey, unsigned char* plainText)
         temp[i] = plainText[i] ^ keys[0][i]; // Round 0 key XOR-ing
     }
 
-    // AES-128 has 11 rounds
-    for (rounds = 0; rounds < 11; rounds++)
+    // AES-128 has 10 rounds and 11 keys, 1 initial and 10 generated
+    for (rounds = 0; rounds < 10; rounds++)
     {
         // AES First stage sbox the states
         for (i = 0; i < 16; i++)
@@ -37,7 +37,7 @@ void AES_encrypt_128(unsigned char* initialKey, unsigned char* plainText)
         //Stage 2 shift the rows
         shiftrows(temp, -1);
 
-        if (rounds != 10)
+        if (rounds != 9)
         {
             //Stage 3 const matrix multiplication do not do it on the last round
             for (i = 0; i < 4; i++)
@@ -63,10 +63,12 @@ void AES_encrypt_128(unsigned char* initialKey, unsigned char* plainText)
         {
             temp[i] = temp[i] ^ keys[rounds + 1][i];
         }
-
+        cout << endl;
     }
 
     copyString(cipherText, temp);
+
+    return cipherText;
 }
 
 void generateKeys(unsigned char* initialKey) // break the initialKey into 4 byte chunks to feed to the function
@@ -83,31 +85,28 @@ void generateKeys(unsigned char* initialKey) // break the initialKey into 4 byte
         keys[0][i] = temp[i];
     }
 
-    for (i = 1; i < 2; i++)
+    for (i = 1; i < 11; i++) // Will go to 10 to account for the initial key that will be saved in keys[0]
     {
+        copyString(keys[i], temp);
 
-        for (j = 0; j < 16; j++)
-            keys[i][j] = temp[j];       // To Do: Fix the bugs with the key generation 
+        shiftrows(temp, 3);
 
-        shiftrows(temp, 0);
-
-        keys[i][0] = keys[i - 1][0] ^ (sbox[temp[0]] ^ rcon[i - 1]);
-        keys[i][1] = keys[i - 1][1] ^ (sbox[temp[1]] ^ rcon[i - 1]);
-        keys[i][2] = keys[i - 1][2] ^ (sbox[temp[2]] ^ rcon[i - 1]); // W[i] in which i % 4 == 0
-        keys[i][3] = keys[i - 1][3] ^ (sbox[temp[3]] ^ rcon[i - 1]); // 4 bytes is the entire word so everything here gets this treatment
+        keys[i][0] = keys[i - 1][0] ^ (sbox[temp[12]] ^ rcon[i - 1]);
+        keys[i][1] = keys[i - 1][1] ^ sbox[temp[13]];
+        keys[i][2] = keys[i - 1][2] ^ sbox[temp[14]]; // W[i] in which i % 4 == 0
+        keys[i][3] = keys[i - 1][3] ^ sbox[temp[15]]; // 4 bytes is the entire word so everything here gets this treatment
+                                                      // as per AES rcon[i - 1, 0, 0, 0] standard
 
         for (j = 1; j < 4; j++)
         {
             keys[i][4 * j] = keys[i - 1][4 * j] ^ keys[i][4 * (j - 1)];
-            keys[i][4 * j + 1] = keys[i - 1][4 * j + 1] ^ keys[i][4 * (j - 1)]; // the previous key, the current element XOR
-            keys[i][4 * j + 2] = keys[i - 1][4 * j + 2] ^ keys[i][4 * (j - 1)]; // the current key, the element offseted by 4 spaces
-            keys[i][4 * j + 3] = keys[i - 1][4 * j + 3] ^ keys[i][4 * (j - 1)];
+            keys[i][4 * j + 1] = keys[i - 1][4 * j + 1] ^ keys[i][4 * (j - 1) + 1]; // the previous key, the current element XOR
+            keys[i][4 * j + 2] = keys[i - 1][4 * j + 2] ^ keys[i][4 * (j - 1) + 2]; // the current key, the element offseted by 4 spaces
+            keys[i][4 * j + 3] = keys[i - 1][4 * j + 3] ^ keys[i][4 * (j - 1) + 3];
         }
 
-        for (j = 0; j < 16; j++)
-            temp[j] = keys[i][j];
+        copyString(temp, keys[i]);
     }
-    showMessage(keys[1]);
 }
 
 // by assigning 2 bytes of memory instead of making pointers to the variables we
@@ -126,10 +125,10 @@ unsigned char finiteMultiplication(unsigned char a, unsigned char b)
         if (b & 1)
             result ^= a;
 
-        // Check if highest bit of a is set (i.e., overflow)
-        hi_bit = a & 0x80;
+        // Check if highest bit of a is set
+        hi_bit = a & 0x80; // binary for 0x80 = 1000 0000
 
-        // Shift a left by 1 (i.e., multiply by x)
+        // Shift to the left by 1
         a <<= 1;
 
         // If overflowed, reduce using AES's irreducible polynomial
@@ -142,7 +141,6 @@ unsigned char finiteMultiplication(unsigned char a, unsigned char b)
     return result;
 }
 
-// Needs optimization
 static inline void shiftrows(unsigned char* temp, int i) // to the left, i is for the offset of the matrix to the rows
 {
     unsigned char aux;
@@ -173,15 +171,15 @@ static inline void shiftrows(unsigned char* temp, int i) // to the left, i is fo
     }
     else
     {
-        aux = temp[i];
-        temp[i] = temp[i + 4];
-        temp[i + 4] = temp[i + 8];
-        temp[i + 8] = temp[i + 12];
-        temp[i + 12] = aux;
+        aux = temp[i * 4];
+        temp[i * 4] = temp[i * 4 + 1];
+        temp[i * 4 + 1] = temp[i * 4 + 2];  // A simple left shift operation for a given column
+        temp[i * 4 + 2] = temp[i * 4 + 3];
+        temp[i * 4 + 3] = aux;
     }
 }
 
-void AES_128_decrypt(unsigned char* cipherText)
+unsigned char* AES_128_decrypt(unsigned char* cipherText)
 {
     // To Do: make the decryption algorithm
 }

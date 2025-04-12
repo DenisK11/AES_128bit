@@ -60,15 +60,15 @@ static const unsigned char matrix[16] = {
 extern "C" {
 #endif
 
-    static unsigned char keys[12][16];
+    static unsigned char keys[11][16];
     static unsigned char cipherText[16];
 
 #ifdef __cplusplus
 }
 #endif
 
-void AES_encrypt_128(unsigned char* initialKey, unsigned char* plainText);
+unsigned char* AES_encrypt_128(unsigned char* initialKey, unsigned char* plainText);
 void generateKeys(unsigned char* initialKey);
 inline void shiftrows(unsigned char* temp, int i);
 unsigned char finiteMultiplication(unsigned char a, unsigned char b);
-void AES_128_decrypt(unsigned char* cipherText);
+unsigned char* AES_128_decrypt(unsigned char* cipherText);

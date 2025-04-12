@@ -17,12 +17,7 @@ int main()
     };
     bool repeat = false;
 
-    unsigned char temp[16] = {
-    0xd6, 0xaa, 0x74, 0xfd,
-    0xd2, 0xaf, 0x72, 0xfa,
-    0xda, 0xa6, 0x78, 0xf1,
-    0xd6, 0xab, 0x76, 0xfe
-    };
+    unsigned char* cipherText;
 
    // repeat = checkPadding(initialKey, 0);
     repeat = true;
@@ -30,7 +25,7 @@ int main()
     while (repeat)
     {
         // generate_elipse_points(1, 113);
-            AES_encrypt_128(initialKey, plainText);
+            cipherText = AES_encrypt_128(initialKey, plainText);
 
             cout << "\nInitial message is: ";
             showMessage(plainText);
