@@ -17,6 +17,8 @@ int main()
     };
     bool repeat = false;
 
+    unsigned char* decryptedMessge;
+
     unsigned char* cipherText;
 
    // repeat = checkPadding(initialKey, 0);
@@ -26,12 +28,16 @@ int main()
     {
         // generate_elipse_points(1, 113);
             cipherText = AES_encrypt_128(initialKey, plainText);
+            decryptedMessge = AES_128_decrypt(cipherText);
+
 
             cout << "\nInitial message is: ";
             showMessage(plainText);
             cout << "\nCipherText is: ";
             showMessage(cipherText);
             cout << endl;
+            cout << "Decrypted message is: ";
+            showMessage(decryptedMessge);
 
             //repeat = checkPadding(plainText, 1);
             repeat = false;

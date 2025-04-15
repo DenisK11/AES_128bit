@@ -56,12 +56,21 @@ static const unsigned char matrix[16] = {
     0x03, 0x01, 0x01, 0x02,
 };
 
+static const unsigned char inverse_matrix[16]
+{
+    0x0e, 0x0b, 0x0d, 0x09,
+    0x09, 0x0e, 0x0b, 0x0d,
+    0x0d, 0x09, 0x0e, 0x0b,
+    0x0b, 0x0d, 0x09, 0x0e
+};
+
 #ifdef __cplusplus
 extern "C" {
 #endif
 
     static unsigned char keys[11][16];
     static unsigned char cipherText[16];
+    static unsigned char decryptedMessage[16];
 
 #ifdef __cplusplus
 }

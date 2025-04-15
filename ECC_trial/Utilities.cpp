@@ -5,6 +5,7 @@ void showMessage(unsigned char* msg)
     unsigned char i;
     for (i = 0; i < 16; i++)
         printf("%02X ", msg[i]);
+    printf("\n");
 }
 
 void copyString(unsigned char* destination, unsigned char* source)
