@@ -24,3 +24,5 @@ void showmatrix(unsigned char* temp);
 void showMessage(unsigned char* msg);
 void copyString(unsigned char* destination, unsigned char* source);
 bool checkPadding(unsigned char* text, unsigned char key);
+void copynString(unsigned char* desitnation, unsigned char* source, unsigned char charNum, int initStep);
+void appendString(unsigned char* destination, unsigned char* source);

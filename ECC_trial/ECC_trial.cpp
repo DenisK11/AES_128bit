@@ -3,45 +3,50 @@
 
 int main()
 {
-    unsigned char plainText[16] = { 
-    0x00, 0x11, 0x22, 0x33,
-    0x44, 0x55, 0x66, 0x77,
-    0x88, 0x99, 0xaa, 0xbb,
-    0xcc, 0xdd, 0xee, 0xff
-    };
-    unsigned char initialKey[16] = {
-    0x00, 0x01, 0x02, 0x03,
-    0x04, 0x05, 0x06, 0x07,
-    0x08, 0x09, 0x0a, 0x0b,
-    0x0c, 0x0d, 0x0e, 0x0f
-    };
+    unsigned char plainText[256] = "Johnson merge la magazin si se culca dupa!";
+    unsigned char initialKey[17] = "Initial Keysssss";
+    unsigned char temp[17];
+    int iteration = 0;
+
+    unsigned char tempDecryptedMessage[256] = "\0";
+    unsigned char tempEncryptedMessage[256] = "\0";
+
     bool repeat = false;
 
-    unsigned char* decryptedMessge;
+    unsigned char temp1[16] = "";
 
+    unsigned char* decryptedMessge;
     unsigned char* cipherText;
 
-   // repeat = checkPadding(initialKey, 0);
-    repeat = true;
+    repeat = checkPadding(initialKey, 0);
 
     while (repeat)
     {
+            copynString(temp, plainText, 16, 16 * iteration);
+
+            repeat = checkPadding(temp, 1);
+
         // generate_elipse_points(1, 113);
-            cipherText = AES_encrypt_128(initialKey, plainText);
+            cipherText = AES_encrypt_128(initialKey, temp);
+
+            copyString(temp1, cipherText);
+
+            appendString(tempEncryptedMessage, temp1);
+
             decryptedMessge = AES_128_decrypt(cipherText);
 
+            appendString(tempDecryptedMessage, decryptedMessge);
 
-            cout << "\nInitial message is: ";
-            showMessage(plainText);
-            cout << "\nCipherText is: ";
-            showMessage(cipherText);
-            cout << endl;
-            cout << "Decrypted message is: ";
-            showMessage(decryptedMessge);
-
-            //repeat = checkPadding(plainText, 1);
-            repeat = false;
+            iteration++;
     }
+
+    cout << "\nInitial message is: ";
+    showMessage(plainText);
+    cout << "\nCipherText is: ";
+    showMessage(tempEncryptedMessage);
+    cout << endl;
+    cout << "Decrypted message is: ";
+    showMessage(tempDecryptedMessage);
 
     return 0;   
 }
