@@ -102,5 +102,100 @@ bool checkPadding(unsigned char* text, unsigned char key)
         return true;
 
     return retval;
+}
 
+void removePadding(unsigned char* msg)
+{
+    int i = 0;
+
+    while (msg[i] != NULL && msg[i] != (unsigned char)1)
+        i++;
+
+    msg[i] = '\0';
+
+}
+
+// Generates all the elipse points over a finite field based on the y^2 = x^3 + 7 equation
+// useful for learning, will leave it here, maybe I will update it so it could generate over any elipse.
+// It will export the generated points into a CSV for further study if needed or wanted.
+void generate_elipse_points(int starting_point, int order)
+{
+    float pointElipse[1000][2];
+
+    pointElipse[0][0] = starting_point;
+    pointElipse[0][1] = fmod(sqrtf((pow(pointElipse[0][0], 3) + 7)), order);
+
+    for (int i = 1; i < order * 5; i++)
+    {
+        pointElipse[i][0] = starting_point + i;
+        pointElipse[i][1] = fmod(sqrtf((pow(pointElipse[i][0], 3) + 7)), order);
+    }
+
+    CSV_file = fopen("curve.csv", "w +");
+
+    for (int i = 0; i < order * 5; i++)
+    {
+        cout << pointElipse[i][0] << " ";
+        cout << pointElipse[i][1] << endl;
+
+        fprintf(CSV_file, "%f, ", pointElipse[i][0]);
+        fprintf(CSV_file, "%f\n", pointElipse[i][1]);
+
+        printf("\n");
+    }
+
+    fclose(CSV_file);
+
+}
+
+// Modular Euclidian division to avoid overflow
+int modinv(int a, int b)
+{
+    int bezout_t = 0, bezout_newt = 1;
+    int remainder = b, new_remainder = a;
+
+    int temp;
+    int quotient;
+
+    while (new_remainder != 0)
+    {
+        quotient = remainder / new_remainder;   // need a lot of math to explain, just trust the first comment
+        temp = bezout_t;
+        bezout_t = bezout_newt;
+        bezout_newt = temp - quotient * bezout_newt;
+
+        temp = remainder;
+        remainder = new_remainder;
+        new_remainder = temp - quotient * new_remainder;
+    }
+
+    if (remainder > 1)
+        return -1; // not invertible
+
+    if (bezout_t < 0)
+        bezout_t += b;
+
+    return bezout_t;
+}
+
+// Modular exponentiation to avoid overflow
+int modpow(int base, int exp, int mod)
+{
+    int result = 1;
+
+    base %= mod;
+
+    if (base % mod == 0)    // avoid an infinite loop, learnt it the hard way
+        return 0;
+    else
+        while (exp > 0)
+        {
+            if (exp & 1)
+                result = (result * base) % mod; // need a lot of math to explain, just trust the first comment
+
+            base = (base * base) % mod;
+            exp >>= 1;
+        }
+
+    return result;
 }

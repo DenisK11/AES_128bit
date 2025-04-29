@@ -15,6 +15,8 @@ using namespace std;
 extern "C" {
 #endif
 
+	static FILE* CSV_file;
+
 #ifdef __cplusplus
 }
 #endif
@@ -26,3 +28,8 @@ void copyString(unsigned char* destination, unsigned char* source);
 bool checkPadding(unsigned char* text, unsigned char key);
 void copynString(unsigned char* desitnation, unsigned char* source, unsigned char charNum, int initStep);
 void appendString(unsigned char* destination, unsigned char* source);
+void removePadding(unsigned char* msg);
+void generate_elipse_points(int starting_point, int order);
+
+int modpow(int base, int exp, int mod);
+int modinv(int a, int b);
